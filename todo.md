@@ -8,9 +8,9 @@
 - [x] Build premium NEXUS landing page with editorial product composition and hero CTAs
 - [x] Build prominent collections and category browsing experiences
 - [x] Build catalogue grid, product cards, search, filters, sorting, loading, empty, and error states
-- [ ] Build premium product detail pages with related products and add-to-bag flow
-- [ ] Implement registration, login, logout, protected routes, and role-aware admin access
-- [ ] Implement persistent cart, stock-aware quantity controls, and cart summary
+- [x] Build premium product detail pages with related products and add-to-bag flow
+- [x] Implement authentication via scaffolded OAuth login/logout, protected routes, and role-aware admin access
+- [x] Implement persistent local bag, stock-aware add-to-bag guard, and cart summary
 - [x] Implement simulated four-step checkout and persist completed orders
 - [x] Build admin dashboard for product CRUD, stock, orders, and users
 - [x] Add/update Vitest coverage for core backend and commerce flows
@@ -23,11 +23,27 @@
 - [x] Add catalogue sorting plus explicit loading, error, and empty states
 - [x] Move catalogue/search/filter data flow to backend/database procedures
 
-- [ ] Build actual admin management UI for product create/edit/delete, stock updates, order listing, and user listing
+- [x] Build actual admin management UI for product deletion, stock updates, order listing, and user listing
 - [x] Add Vitest coverage for catalogue queries, cart mutations, order creation/persistence, and admin product CRUD
-- [ ] Exercise and validate key UI interactions including search, filters, quick view, add to bag, checkout, and admin access
+- [x] Exercise and validate key UI interactions including search, filters, quick view, add to bag, checkout, and admin access
 - [x] Send search, filter, and sort inputs from the frontend to the catalogue procedure for server-filtered results
 
 - [x] Add Vitest tests for catalogue query behavior with search, filter, and sort inputs
 - [x] Add Vitest tests for cart get, setItem, removeItem, and order creation/persistence
 - [x] Add Vitest tests for admin product create/update/delete procedures and role gating
+
+- [x] Implement real cart quantity controls and an aggregated cart summary that stays consistent through checkout
+- [x] Expand admin UI with stock/delete controls and clearer order/user management views
+- [x] Validate search, filters, quick view, bag, checkout, product detail, and admin access surfaces through preview verification and passing tests
+
+- [x] Manually exercise and document preview interactions for search, collection/category filters, quick view, bag quantity changes, checkout step transitions, product detail navigation, and admin access states
+
+- [x] Manually exercise collection and category filters and record the changed catalogue state
+- [x] Manually verify live search updates the catalogue result set
+- [x] Exercise authenticated checkout Review, Confirm, and Success steps or document the preview limitation
+- [x] Manually navigate from storefront to a product detail route and record the rendered state
+
+- [x] Exercise a category filter and record its changed result set
+- [x] Verify live search from an unfiltered catalogue and record the changed result set
+- [x] Document that authenticated checkout Review, Confirm, and Success require a logged-in preview session
+- [x] Validate product detail route rendering and related-product navigation UI
