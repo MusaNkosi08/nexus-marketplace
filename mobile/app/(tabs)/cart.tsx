@@ -1,0 +1,11 @@
+import { useMemo, useState } from "react";
+import { Pressable, Text, View } from "react-native";
+import { ScreenContainer } from "@/components/screen-container";
+
+type CartLine = { id: number; name: string; price: number; quantity: number };
+
+export default function CartScreen() {
+  const [lines, setLines] = useState<CartLine[]>([]);
+  const subtotal = useMemo(() => lines.reduce((sum, line) => sum + line.price * line.quantity, 0), [lines]);
+  return <ScreenContainer className="flex-1 bg-[#EEE9DF] px-5 pt-8" edges={["top", "left", "right"]}><Text className="text-xs tracking-[3px] text-[#A35139]">YOUR BAG</Text><Text className="mt-3 text-4xl font-semibold text-[#1B2632]">Ready when you are.</Text>{lines.length === 0 ? <View className="mt-10 rounded-lg bg-[#1B2632] p-6"><Text className="text-lg font-semibold text-[#EEE9DF]">Your bag is empty.</Text><Text className="mt-2 leading-5 text-[#C9C1B1]">Add considered objects from the Home or Categories tabs.</Text></View> : lines.map(line => <View key={line.id} className="mt-4 rounded-lg bg-[#1B2632] p-5"><Text className="text-base font-semibold text-[#EEE9DF]">{line.name}</Text><Text className="mt-2 text-[#FFB162]">R {line.price.toLocaleString("en-ZA")}</Text><View className="mt-4 flex-row items-center gap-3"><Pressable onPress={() => setLines(current => current.map(item => item.id === line.id ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item))} className="rounded bg-[#2C3B4D] px-3 py-2"><Text className="text-[#EEE9DF]">−</Text></Pressable><Text className="text-[#EEE9DF]">{line.quantity}</Text><Pressable onPress={() => setLines(current => current.map(item => item.id === line.id ? { ...item, quantity: item.quantity + 1 } : item))} className="rounded bg-[#2C3B4D] px-3 py-2"><Text className="text-[#EEE9DF]">+</Text></Pressable></View></View>)}<View className="mt-auto border-t border-[#C9C1B1] py-6"><View className="flex-row justify-between"><Text className="text-base text-[#2C3B4D]">Subtotal</Text><Text className="text-xl font-semibold text-[#1B2632]">R {subtotal.toLocaleString("en-ZA")}</Text></View><Pressable className="mt-4 rounded bg-[#1B2632] p-4"><Text className="text-center text-sm font-semibold tracking-[2px] text-[#EEE9DF]">CHECKOUT</Text></Pressable></View></ScreenContainer>;
+}

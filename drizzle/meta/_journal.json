@@ -15,6 +15,13 @@
       "when": 1787222022062,
       "tag": "0001_tiresome_tigra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787226497384,
+      "tag": "0002_nostalgic_jack_flag",
+      "breakpoints": true
     }
   ]
 }

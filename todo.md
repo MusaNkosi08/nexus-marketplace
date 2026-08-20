@@ -15,7 +15,7 @@
 - [x] Build admin dashboard for product CRUD, stock, orders, and users
 - [x] Add/update Vitest coverage for core backend and commerce flows
 - [x] Verify desktop and mobile UI screenshots plus key interactions
-- [ ] Save final checkpoint and deliver the project version
+- [x] Save final checkpoint and deliver the project version
 
 - [x] Add correct corresponding real images for every catalogue product and remove mismatched reused images
 - [x] Surface the exact tagline prominently in the landing hero
@@ -47,3 +47,32 @@
 - [x] Verify live search from an unfiltered catalogue and record the changed result set
 - [x] Document that authenticated checkout Review, Confirm, and Success require a logged-in preview session
 - [x] Validate product detail route rendering and related-product navigation UI
+
+
+## MET4 Assignment 2 Extensions
+
+- [x] Preserve the existing React NEXUS web app unchanged as the current storefront
+- [x] Add a separate Angular frontend folder with Bootstrap and the five rubric pages
+- [x] Add a separate React Native Expo mobile folder with at least four tabs: Home, Categories, Cart, and Profile
+- [x] Connect the Angular and mobile clients to the existing Express/tRPC backend data surface
+- [x] Add JWT registration and login routes with bcrypt password hashing without removing existing OAuth
+- [x] Add at least four REST-style CRUD item endpoints required by the brief
+- [ ] Add real payment processing integration while retaining simulated checkout fallback
+- [x] Add validation and tests for JWT/bcrypt auth and REST endpoint contracts; payment linkage remains pending Stripe configuration
+- [x] Add assignment documentation with web/mobile structure, rubric notes, folder structure, and submission packaging guidance
+
+- [x] Add the separate mobile app scaffold and rubric-required tab structure
+- [x] Add JWT/bcrypt auth and REST CRUD implementation without altering the existing React storefront
+
+- [x] Install and build the separate Angular frontend with HTTP client wiring and valid admin payload defaults
+- [x] Install and validate the separate Expo mobile project and four-tab navigation via dependency install and TypeScript check
+- [x] Verify the shared Express API data source used by Angular and mobile clients with a 200 smoke test
+- [x] Add tests for REST item endpoint contracts and admin authorization behavior
+
+- [x] Add REST tests for successful GET /api/items and GET /api/items/:id response contracts
+- [x] Add REST tests for non-admin 403 and admin authorization behavior on item mutations
+- [x] Add REST tests for PUT and DELETE item authorization behavior
+
+- [x] Add a safe authorized-admin mutation test path for the REST item endpoints without leaving test data behind
+
+- [x] Add endpoint-level admin-token mutation coverage using a safe mocked database success path
