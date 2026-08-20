@@ -1,33 +1,71 @@
+import { useMemo, useState } from "react";
+import { ArrowDownRight, ArrowUpRight, Check, ChevronDown, Menu, Search, ShoppingBag, Sparkles, X } from "lucide-react";
+import { products, collections, categories, formatZAR, type Product } from "@shared/nexusData";
+import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import { startLogin } from "@/const";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
+const navItems = ["STUDY", "CREATE", "BUILD", "FOCUS", "TRAVEL"];
+
+function ProductCard({ product, onAdd, onView }: { product: Product; onAdd: (p: Product) => void; onView: (p: Product) => void }) {
+  return <article className="product-card">
+    <button className="product-media" onClick={() => onView(product)} aria-label={`View ${product.name}`}>
+      {product.badge && <span className="product-badge">{product.badge}</span>}
+      <img src={product.image} alt={`${product.brand} ${product.name}`} />
+      <span className="view-link">QUICK VIEW <ArrowUpRight size={15} /></span>
+    </button>
+    <div className="product-meta"><span>{product.brand}</span><span className="availability"><i /> {product.stock > 0 ? "IN STOCK" : "SOLD OUT"}</span></div>
+    <h3>{product.name}</h3>
+    <div className="product-bottom"><strong>{formatZAR(product.price)}</strong><button className="add-button" onClick={() => onAdd(product)}>ADD TO BAG <span>+</span></button></div>
+  </article>;
+}
+
 export default function Home() {
-  // The useAuth hook provides authentication state.
-  // To implement login/logout, call logout(), or start login from an event
-  // handler: onClick={() => startLogin()} (imported from "@/const"). Never call
-  // startLogin() during render (no href={startLogin()}) — it mints a one-time
-  // nonce cookie and must run only at the moment of navigation.
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const [activeCollection, setActiveCollection] = useState<string>("ALL");
+  const [activeCategory, setActiveCategory] = useState<string>("ALL");
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<"recommended" | "newest" | "price-low" | "price-high">("recommended");
+  const [bag, setBag] = useState<Product[]>([]);
+  const [selected, setSelected] = useState<Product | null>(null);
+  const [bagOpen, setBagOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [checkoutStep, setCheckoutStep] = useState<"cart" | "review" | "confirm" | "success">("cart");
+  const { user } = useAuth();
+  const orderMutation = trpc.orders.create.useMutation();
+  const collectionId = activeCollection === "ALL" ? undefined : collections.findIndex((collection) => collection.name === activeCollection) + 1;
+  const categoryId = activeCategory === "ALL" ? undefined : categories.findIndex((category) => category === activeCategory) + 1;
+  const catalogueQuery = trpc.catalogue.products.useQuery({ search: search || undefined, collectionId, categoryId, sort: sort === "recommended" ? "recommended" : sort });
+  const sourceProducts = useMemo(() => catalogueQuery.data?.map((row) => ({ ...(products.find((product) => product.id === row.id) ?? products[0]), id: row.id, brand: row.brand, name: row.name, price: Number(row.priceZar), image: row.imageUrl, description: row.description, stock: row.stock })) ?? products, [catalogueQuery.data]);
 
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const filtered = useMemo(() => sourceProducts, [sourceProducts]);
+  const total = bag.reduce((sum, p) => sum + p.price, 0);
+  const addToBag = (product: Product) => { setBag((current) => [...current, product]); setBagOpen(true); };
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
+  return <div className="nexus-app">
+    <div className="announcement">COMPLIMENTARY DELIVERY ON ORDERS OVER R1,500 <ArrowUpRight size={13} /></div>
+    <header className="site-header">
+      <a className="wordmark" href="#top">NEXUS<span>®</span></a>
+      <nav className={`main-nav ${menuOpen ? "open" : ""}`}>{navItems.map((item) => <button key={item} onClick={() => { setActiveCollection(item); document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }); }}>{item}</button>)}<a href="#catalogue">ALL PRODUCTS</a></nav>
+      <div className="header-actions"><button className="icon-button" onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })} aria-label="Search"><Search size={19} /></button><button className="bag-button" onClick={() => setBagOpen(true)}>BAG <span>{bag.length.toString().padStart(2, "0")}</span></button><button className="icon-button menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu"><Menu size={20} /></button></div>
+    </header>
+
+    <main id="top">
+      <section className="hero-section">
+        <div className="hero-copy"><p className="kicker">THE NEXUS EDIT / 2026</p><p className="hero-tagline">NEXUS / TECHNOLOGY, INTELLIGENTLY CURATED.</p><h1>TECHNOLOGY<br /><em>THAT MOVES</em><br />WITH YOU.</h1><p className="hero-support">A considered edit of the tools, objects and ideas that shape how you study, work, create and move.</p><div className="hero-actions"><button className="primary-button" onClick={() => document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" })}>EXPLORE COLLECTIONS <ArrowDownRight size={18} /></button><button className="text-button" onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })}>DISCOVER PRODUCTS <ArrowUpRight size={17} /></button></div></div>
+        <div className="hero-collage" aria-label="A considered composition of technology products"><div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" /><div className="hero-product hero-laptop"><img src="/manus-storage/macbook-air_169c651b.jpg" alt="Apple MacBook Air" /></div><div className="hero-product hero-headphones"><img src="/manus-storage/sony-wh1000xm5_4e7bf772.jpg" alt="Sony WH-1000XM5" /></div><div className="hero-product hero-monitor"><img src="/manus-storage/asus-proart-pa247cv_31b2932d.png" alt="ASUS ProArt display" /></div><div className="hero-index">N / 01<br /><span>CURATED<br />TECHNOLOGY</span></div></div>
+      </section>
+
+      <section className="manifesto"><span>01 — WHY NEXUS</span><p>We do not organise technology by spec sheet. <strong>We organise it around what you are trying to accomplish.</strong></p><span className="manifesto-side">SCROLL TO EXPLORE ↓</span></section>
+
+      <section id="collections" className="collections-section"><div className="section-heading"><div><p className="kicker">THE FIVE EDITS</p><h2>Find your <em>frequency.</em></h2></div><p>Five distinct ways to move through a world of better tools.</p></div><div className="collection-grid">{collections.map((collection) => <button className={`collection-card tone-${collection.tone}`} key={collection.name} onClick={() => { setActiveCollection(collection.name); document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }); }}><div className="collection-top"><span>{collection.eyebrow}</span><ArrowUpRight size={19} /></div><div className="collection-image"><img src={collection.image} alt={`${collection.name} collection`} /></div><div className="collection-copy"><h3>{collection.name}</h3><p>{collection.description}</p><small>{products.filter((product) => product.collection === collection.name).length.toString().padStart(2, "0")} PRODUCTS</small><span>EXPLORE EDIT <ArrowUpRight size={14} /></span></div></button>)}</div></section>
+
+      <section id="catalogue" className="catalogue-section"><div className="catalogue-head"><div><p className="kicker">THE CATALOGUE / {filtered.length.toString().padStart(2, "0")} OBJECTS</p><h2>Considered <em>objects.</em></h2></div><div className="catalogue-search"><Search size={18} /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search the catalogue" aria-label="Search catalogue" /></div></div><div className="filter-bar"><div className="filter-scroll"><button className={activeCollection === "ALL" ? "active" : ""} onClick={() => setActiveCollection("ALL")}>ALL COLLECTIONS</button>{collections.map((c) => <button className={activeCollection === c.name ? "active" : ""} onClick={() => setActiveCollection(c.name)} key={c.name}>{c.name}</button>)}</div><label className="category-select">{activeCategory === "ALL" ? "ALL CATEGORIES" : activeCategory}<ChevronDown size={15} /><select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)}><option value="ALL">ALL CATEGORIES</option>{categories.map((category) => <option key={category}>{category}</option>)}</select></label><label className="category-select">SORT: {sort === "recommended" ? "RECOMMENDED" : sort === "price-low" ? "PRICE LOW TO HIGH" : "PRICE HIGH TO LOW"}<ChevronDown size={15} /><select value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}><option value="recommended">RECOMMENDED</option><option value="price-low">PRICE LOW TO HIGH</option><option value="price-high">PRICE HIGH TO LOW</option></select></label></div>{catalogueQuery.isLoading && <div className="catalogue-empty"><Sparkles size={24} /><h3>Loading the edit.</h3><p>Gathering the latest NEXUS objects.</p></div>}{catalogueQuery.isError && <div className="catalogue-empty"><X size={24} /><h3>Catalogue unavailable.</h3><p>We could not load the live catalogue. Showing the considered edit instead.</p></div>}{!catalogueQuery.isLoading && <div className="product-grid">{filtered.map((product) => <ProductCard key={product.id} product={product} onAdd={addToBag} onView={setSelected} />)}</div>}{!catalogueQuery.isLoading && filtered.length === 0 && <div className="catalogue-empty"><Sparkles size={24} /><h3>Nothing in this edit yet.</h3><p>Try another search, collection or category.</p><button className="text-button" onClick={() => { setSearch(""); setActiveCollection("ALL"); setActiveCategory("ALL"); }}>RESET FILTERS <X size={15} /></button></div>}</section>
+
+      <section className="closing-cta"><p className="kicker">THE NEXUS STANDARD</p><h2>Better tools.<br /><em>Better momentum.</em></h2><button className="primary-button" onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })}>SHOP THE EDIT <ArrowUpRight size={18} /></button></section>
+    </main>
+    <footer><a className="wordmark" href="#top">NEXUS<span>®</span></a><span>TECHNOLOGY, INTELLIGENTLY CURATED.</span><span>© 2026 NEXUS / SOUTH AFRICA</span></footer>
+
+    {selected && <div className="overlay" onClick={() => setSelected(null)}><div className="quick-view" onClick={(e) => e.stopPropagation()}><button className="close-button" onClick={() => setSelected(null)}><X /></button><div className="quick-image"><img src={selected.image} alt={selected.name} /></div><div className="quick-copy"><p className="kicker">{selected.collection} / {selected.category}</p><span className="brand-label">{selected.brand}</span><h2>{selected.name}</h2><p>{selected.description}</p><strong>{formatZAR(selected.price)}</strong><button className="primary-button" onClick={() => { addToBag(selected); setSelected(null); }}>ADD TO BAG <ShoppingBag size={17} /></button></div></div></div>}
+    {checkoutStep !== "cart" && <div className="overlay" onClick={() => setCheckoutStep("cart")}><div className="checkout-modal" onClick={(e) => e.stopPropagation()}><p className="kicker">NEXUS / SIMULATED CHECKOUT</p><div className="checkout-steps"><span className={checkoutStep === "review" ? "current" : "done"}>01 CART</span><span className={checkoutStep === "review" ? "current" : checkoutStep === "confirm" || checkoutStep === "success" ? "done" : ""}>02 REVIEW</span><span className={checkoutStep === "confirm" ? "current" : checkoutStep === "success" ? "done" : ""}>03 CONFIRM</span><span className={checkoutStep === "success" ? "current" : ""}>04 SUCCESS</span></div>{checkoutStep === "review" && <><h2>Review your edit.</h2><p>{bag.length} considered object{bag.length === 1 ? "" : "s"} · {formatZAR(total)}</p><button className="primary-button" onClick={() => setCheckoutStep("confirm")}>CONTINUE TO CONFIRM <ArrowUpRight size={17} /></button></>}{checkoutStep === "confirm" && <><h2>Ready to place the order?</h2><p>Your simulated order will be written to the NEXUS database. No payment will be taken.</p><button className="primary-button" disabled={orderMutation.isPending} onClick={async () => { await orderMutation.mutateAsync({ items: bag.map((item) => ({ productId: item.id, quantity: 1 })) }); setCheckoutStep("success"); setBag([]); }}>{orderMutation.isPending ? "CONFIRMING…" : "CONFIRM ORDER"} <Check size={17} /></button></>}{checkoutStep === "success" && <><h2>Order confirmed.</h2><p>Thank you, {user?.name ?? "NEXUS member"}. Your considered edit is now in motion.</p><button className="primary-button" onClick={() => setCheckoutStep("cart")}>CONTINUE EXPLORING <ArrowUpRight size={17} /></button></>}</div></div>}{bagOpen && <div className="overlay bag-overlay" onClick={() => setBagOpen(false)}><aside className="bag-panel" onClick={(e) => e.stopPropagation()}><div className="bag-head"><div><p className="kicker">YOUR EDIT</p><h2>Bag <span>{bag.length.toString().padStart(2, "0")}</span></h2></div><button className="close-button" onClick={() => setBagOpen(false)}><X /></button></div>{bag.length === 0 ? <div className="empty-bag"><Sparkles size={26} /><p>Your bag is waiting for something considered.</p><button className="text-button" onClick={() => setBagOpen(false)}>CONTINUE EXPLORING <ArrowUpRight size={16} /></button></div> : <><div className="bag-items">{bag.map((item, index) => <div className="bag-item" key={`${item.id}-${index}`}><img src={item.image} alt={item.name} /><div><span>{item.brand}</span><h3>{item.name}</h3><strong>{formatZAR(item.price)}</strong></div><button onClick={() => setBag((current) => current.filter((_, i) => i !== index))} aria-label={`Remove ${item.name}`}><X size={15} /></button></div>)}</div><div className="bag-total"><span>SUBTOTAL</span><strong>{formatZAR(total)}</strong></div><button className="primary-button checkout-button" onClick={() => { if (!user) { startLogin(); return; } setBagOpen(false); setCheckoutStep("review"); }}>CHECKOUT <ArrowUpRight size={18} /></button><p className="bag-note"><Check size={14} /> Simulated checkout · secure by NEXUS</p></>}</aside></div>}
+  </div>;
 }
