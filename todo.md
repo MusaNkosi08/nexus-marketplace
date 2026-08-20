@@ -117,3 +117,16 @@
 - [x] Add an explicit Expo root index redirect to the tabs Home route for reliable route resolution.
 - [x] Attempt the final Expo Go/LAN startup after the SafeAreaProvider and root-index changes; document the sandbox watcher-limit constraint if encountered.
 - [x] Diagnose and document the remaining blank Expo web root in the sandbox; the web export, TypeScript check, and Expo Go workflow remain verified, while the browser shell did not visibly mount the route.
+
+## Startup, Parity, and Admin Fixes
+
+- [x] Make the root, Angular, and mobile local startup commands work from a clean VS Code checkout.
+- [x] Make Expo Go QR/LAN startup reliable and document LAN, tunnel, and API URL requirements.
+- [x] Align mobile and web product, cart, authentication, purchase, and admin entry points with the shared backend.
+- [x] Provide a clear admin login/promotion workflow and surface admin access in the clients.
+- [x] Run clean install, typecheck, test, web build, and Expo startup verification after the fixes.
+- [x] Verify clean npm installs for root, Angular, and mobile in isolated install directories after the latest changes.
+- [x] Wire Angular cart checkout to the shared authenticated `/api/orders` endpoint and persist real orders.
+- [x] Add a visible gated admin entry point to the React storefront for authenticated administrators.
+- [x] Re-run cross-client parity verification after the Angular purchase and React admin-entry fixes.
+- [x] Verify the latest Angular, React, and Expo shared API contracts with non-mutating authenticated probes and document that successful order placement requires the user's own login session.
