@@ -9,3 +9,11 @@ Angular now sends authenticated cart lines to the shared `/api/orders` route and
 Root, Angular, and mobile clean `npm ci --ignore-scripts --no-audit --no-fund` checks passed in isolated directories. Root production build, root typecheck, Angular production build, mobile typecheck, and all 21 Vitest tests passed after the changes.
 
 An existing database administrator identity was used only to sign a short-lived local JWT for non-mutating probes. An authenticated malformed admin item request returned HTTP 400 rather than 401/403, confirming admin authorization reached validation; an authenticated excessive-quantity order request returned HTTP 409, confirming the stock-aware order path reached inventory validation without writing an order. The React `/admin` route was opened in preview and correctly displayed its protected sign-in gate while no preview identity was active. Full successful order placement requires the user's own login session and should be exercised on a real device or local browser with the user's account.
+
+## Privacy, inventory, and catalogue refinement
+
+Unauthenticated public navigation no longer exposes the privileged workspace label. React, Angular, and Expo keep the entry point behind role checks; the protected route itself uses generic access messaging until an approved session exists. All three clients now include a realistic NEXUS customer footer.
+
+The live database contains 30 products. The five collections are balanced at six products each. The eight technical categories are distributed as AUDIO 4, KEYBOARDS 4, DISPLAYS 4, STORAGE 4, ACCESSORIES 4, MOBILE 3, WORKSTATIONS 3, and CAMERAS 4, which is the closest possible distribution for 30 products across eight categories.
+
+An authenticated admin runtime probe read 30 items, confirmed a stock update with HTTP 200 and the database value unchanged at 10 for the selected item, and read the persisted recent-orders table with HTTP 200 and three rows. Angular and Expo now expose the same stock confirmation and recent-orders API contract; React renders recent orders as a table through its admin procedure.

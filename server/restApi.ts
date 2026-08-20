@@ -3,7 +3,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { nanoid } from "nanoid";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { getDb } from "./db";
 import { categories, collections, orderItems, orders, products, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
@@ -111,6 +111,13 @@ export function registerRestApi(app: Express) {
     await db.insert(orderItems).values(lines.map(({ product, quantity }) => ({ orderId, productId: product.id, productName: product.name, unitPriceZar: Number(product.priceZar).toFixed(2), quantity })));
     for (const { product, quantity } of lines) await db.update(products).set({ stock: product.stock - quantity, isAvailable: product.stock - quantity > 0 }).where(eq(products.id, product.id));
     return res.status(201).json({ orderId, totalZar: total.toFixed(2), status: "confirmed" });
+  });
+
+  router.get("/orders", requireJwt, requireAdmin, async (_req, res) => {
+    const db = await getDb();
+    if (!db) return res.status(503).json({ error: "Database unavailable" });
+    const rows = await db.select().from(orders).orderBy(desc(orders.createdAt)).limit(25);
+    return res.json({ orders: rows });
   });
 
   router.get("/items", async (_req, res) => {

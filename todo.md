@@ -130,3 +130,13 @@
 - [x] Add a visible gated admin entry point to the React storefront for authenticated administrators.
 - [x] Re-run cross-client parity verification after the Angular purchase and React admin-entry fixes.
 - [x] Verify the latest Angular, React, and Expo shared API contracts with non-mutating authenticated probes and document that successful order placement requires the user's own login session.
+
+## Privacy, Catalogue Balance, and Commerce Refinement
+
+- [x] Hide all Admin labels and entry points from non-admin users while retaining admin-only access.
+- [x] Add a realistic footer to React, Angular, and Expo clients without exposing Admin to regular users.
+- [x] Add explicit confirm controls for stock updates and persist confirmed values to the database on web and mobile.
+- [x] Verify the orders table/schema and expose recent orders in the admin workspace.
+- [x] Add 10 real products and rebalance the eight technical categories as evenly as possible for 30 total products.
+- [x] Verify the updated catalogue, stock, orders, footer, and admin visibility behavior across web and mobile.
+- [x] Add exactly 10 products and rebalance the five NEXUS collections to six products each; the eight technical categories are verified at the closest possible 4/3 distribution because 30 cannot divide equally by 8.

@@ -12,9 +12,9 @@ describe("NEXUS catalogue integrity", () => {
     expect(formatZAR(24999).replace(/\u00a0/g, " ")).toBe("R24 999");
   });
 
-  it("has unique image paths for every seeded catalogue product", () => {
-    expect(products).toHaveLength(10);
-    expect(new Set(products.map((product) => product.image)).size).toBe(10);
-    expect(products.every((product) => product.price > 0 && product.stock > 0)).toBe(true);
+  it("contains the twenty real catalogue products with valid identity, imagery, price, and stock", () => {
+    expect(products).toHaveLength(20);
+    expect(new Set(products.map((product) => product.name)).size).toBe(20);
+    expect(products.every((product) => product.image.startsWith("/manus-storage/") && product.price > 0 && product.stock > 0)).toBe(true);
   });
 });

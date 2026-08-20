@@ -44,6 +44,13 @@ describe("rubric REST item endpoints", () => {
     expect(response.body.error).toContain("Bearer token");
   });
 
+  it("protects recent order visibility behind the admin role", async () => {
+    const token = createLocalToken({ id: 999999, role: "user", email: "user@nexus.local" });
+    const response = await request(createTestApp()).get("/api/orders").set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(403);
+    expect(response.body.error).toContain("Admin access");
+  });
+
   it("recognizes an admin bearer role as authorized for item management", () => {
     expect(canManageItems("admin")).toBe(true);
     expect(canManageItems("user")).toBe(false);
