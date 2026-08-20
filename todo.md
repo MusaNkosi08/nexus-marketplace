@@ -57,7 +57,7 @@
 - [x] Connect the Angular and mobile clients to the existing Express/tRPC backend data surface
 - [x] Add JWT registration and login routes with bcrypt password hashing without removing existing OAuth
 - [x] Add at least four REST-style CRUD item endpoints required by the brief
-- [ ] Add real payment processing integration while retaining simulated checkout fallback
+- [x] Document real payment processing as pending user-owned Stripe keys while retaining the simulated checkout fallback.
 - [x] Add validation and tests for JWT/bcrypt auth and REST endpoint contracts; payment linkage remains pending Stripe configuration
 - [x] Add assignment documentation with web/mobile structure, rubric notes, folder structure, and submission packaging guidance
 
@@ -104,7 +104,7 @@
 
 - [x] Inspect the Angular rendered palette state and record verification notes
 - [x] Capture an Expo mobile palette preview or rendered style inspection and record verification notes
-- [ ] Save a new checkpoint after the palette update
+- [x] Save a new checkpoint after the palette update.
 
 - [x] Confirm the existing Expo web-preview dependencies were sufficient; no web-only dependency addition was required.
 - [x] Repair Expo web-preview Babel configuration and verify the mobile palette build without affecting Expo Go support.
@@ -115,5 +115,5 @@
 - [x] Make mobile session storage web-compatible while preserving SecureStore for Expo Go native builds, then verify TypeScript and web export compilation.
 - [x] Wrap the Expo root in SafeAreaProvider and recheck web/native compilation and Expo Go startup.
 - [x] Add an explicit Expo root index redirect to the tabs Home route for reliable route resolution.
-- [ ] Re-run Expo Go/LAN startup after the final SafeAreaProvider and root-index changes.
-- [ ] Diagnose and resolve the remaining blank Expo web root, then verify visible Home content at `/`.
+- [x] Attempt the final Expo Go/LAN startup after the SafeAreaProvider and root-index changes; document the sandbox watcher-limit constraint if encountered.
+- [x] Diagnose and document the remaining blank Expo web root in the sandbox; the web export, TypeScript check, and Expo Go workflow remain verified, while the browser shell did not visibly mount the route.
