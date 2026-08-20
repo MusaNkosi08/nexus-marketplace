@@ -1,0 +1,23 @@
+flowchart LR
+  ROOT["nexus-marketplace/"]
+  ROOT --> WEB["client/\nReact storefront"]
+  ROOT --> ANG["frontend-angular/\nAngular + Bootstrap"]
+  ROOT --> MOB["mobile/\nExpo Router + NativeWind"]
+  ROOT --> SERVER["server/\nExpress + tRPC + REST"]
+  ROOT --> DB["drizzle/\nMySQL-compatible schema"]
+  ROOT --> SHARED["shared/\nshared types/constants"]
+
+  WEB --> WEBP["Home, catalogue, detail, bag, checkout, admin"]
+  ANG --> ANGP["Home, item list, detail, cart, admin"]
+  MOB --> MOBP["Home, categories, detail, cart, profile"]
+  SERVER --> AUTH["JWT/bcrypt + OAuth"]
+  SERVER --> API["/api/items, /api/orders, /api/auth"]
+  DB --> TABLES["users, products, orders, order_items"]
+
+  WEBP -.-> API
+  ANGP -.-> API
+  MOBP -.-> API
+  API -.-> TABLES
+  AUTH -.-> WEBP
+  AUTH -.-> ANGP
+  AUTH -.-> MOBP

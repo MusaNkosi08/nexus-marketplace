@@ -94,3 +94,26 @@
 - [x] Add a dedicated mobile product-detail route with add-to-bag behavior
 - [x] Run the Expo Go startup command and capture a successful Expo Go LAN startup validation
 - [x] Add insufficient-stock rejection and stock-decrement assertions for authenticated orders
+
+
+## Palette Update
+
+- [x] Replace the existing NEXUS web palette with the supplied Transparent Yellow, Sceptre Red, Cerulean Blue, Potting Soil, and Java Brown tokens
+- [x] Apply the supplied palette consistently to the Angular companion and Expo mobile client
+- [x] Verify contrast, typechecks, screenshots, and save a palette checkpoint
+
+- [x] Inspect the Angular rendered palette state and record verification notes
+- [x] Capture an Expo mobile palette preview or rendered style inspection and record verification notes
+- [ ] Save a new checkpoint after the palette update
+
+- [x] Confirm the existing Expo web-preview dependencies were sufficient; no web-only dependency addition was required.
+- [x] Repair Expo web-preview Babel configuration and verify the mobile palette build without affecting Expo Go support.
+- [x] Re-run Expo Go/LAN startup after the Babel correction and record native-support verification.
+- [x] Import and verify the NativeWind global stylesheet in the Expo root layout so web palette styling is applied consistently.
+- [x] Add a NEXUS palette mood-board reference for the assignment submission.
+- [x] Add a deterministic folder-structure diagram covering React, Angular, Expo, backend, and database layers.
+- [x] Make mobile session storage web-compatible while preserving SecureStore for Expo Go native builds, then verify TypeScript and web export compilation.
+- [x] Wrap the Expo root in SafeAreaProvider and recheck web/native compilation and Expo Go startup.
+- [x] Add an explicit Expo root index redirect to the tabs Home route for reliable route resolution.
+- [ ] Re-run Expo Go/LAN startup after the final SafeAreaProvider and root-index changes.
+- [ ] Diagnose and resolve the remaining blank Expo web root, then verify visible Home content at `/`.

@@ -1,6 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
-  theme: { extend: { colors: { nexus: { palladian: "#EEE9DF", oatmeal: "#C9C1B1", blue: "#2C3B4D", abyss: "#1B2632", flame: "#FFB162", truffle: "#A35139" } } } },
+  theme: {
+    extend: {
+      colors: {
+        nexus: {
+          transparentYellow: "#F5EFC6",
+          sceptreRed: "#4D0E12",
+          ceruleanBlue: "#A5BCD6",
+          pottingSoil: "#4A2E27",
+          javaBrown: "#231815",
+        },
+      },
+    },
+  },
   plugins: [],
 };

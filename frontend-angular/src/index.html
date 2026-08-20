@@ -5,6 +5,21 @@
   <title>NEXUS Angular Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root { --nexus-yellow:#F5EFC6; --nexus-red:#4D0E12; --nexus-blue:#A5BCD6; --nexus-soil:#4A2E27; --nexus-java:#231815; }
+    body { background:var(--nexus-yellow)!important; color:var(--nexus-java); font-family:Georgia, 'Times New Roman', serif; }
+    h1,h2,h3 { color:var(--nexus-java); letter-spacing:-.04em; }
+    .navbar, .bg-dark { background:var(--nexus-java)!important; }
+    .btn-dark { background:var(--nexus-red); border-color:var(--nexus-red); }
+    .btn-dark:hover, .btn-outline-danger:hover { background:var(--nexus-soil); border-color:var(--nexus-soil); }
+    .btn-outline-danger { color:var(--nexus-red); border-color:var(--nexus-red); }
+    .card, .table-responsive, .alert-light { background:rgba(255,255,255,.38)!important; border-color:rgba(35,24,21,.2)!important; }
+    .text-muted { color:var(--nexus-soil)!important; }
+    a { color:var(--nexus-red); }
+    .table { --bs-table-bg:transparent; --bs-table-color:var(--nexus-java); }
+    .form-control { background:#FBF7E6; border-color:rgba(35,24,21,.25); }
+    .form-control:focus { border-color:var(--nexus-blue); box-shadow:0 0 0 .2rem rgba(165,188,214,.35); }
+  </style>
 </head>
-<body class="bg-light"><app-root></app-root></body>
+<body><app-root></app-root></body>
 </html>
