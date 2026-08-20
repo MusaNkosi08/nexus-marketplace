@@ -35,7 +35,7 @@ export default function Home() {
   const collectionId = activeCollection === "ALL" ? undefined : collections.findIndex((collection) => collection.name === activeCollection) + 1;
   const categoryId = activeCategory === "ALL" ? undefined : categories.findIndex((category) => category === activeCategory) + 1;
   const catalogueQuery = trpc.catalogue.products.useQuery({ search: search || undefined, collectionId, categoryId, sort: sort === "recommended" ? "recommended" : sort });
-  const sourceProducts = useMemo(() => catalogueQuery.data?.map((row) => ({ ...(products.find((product) => product.id === row.id) ?? products[0]), id: row.id, brand: row.brand, name: row.name, price: Number(row.priceZar), image: row.imageUrl, description: row.description, stock: row.stock })) ?? products, [catalogueQuery.data]);
+  const sourceProducts = useMemo(() => catalogueQuery.data?.map((row) => ({ ...(products.find((product) => product.id === row.id) ?? products[0]), id: row.id, brand: row.brand, name: row.name, price: Number(row.priceZar), image: row.imageUrl, description: row.description, stock: row.stock, collection: collections[(row.collectionId ?? 1) - 1]?.name ?? "BUILD", category: categories[(row.categoryId ?? 1) - 1] ?? "ACCESSORIES" })) ?? products, [catalogueQuery.data]);
 
   const filtered = useMemo(() => sourceProducts, [sourceProducts]);
   const total = bag.reduce((sum, p) => sum + p.price, 0);

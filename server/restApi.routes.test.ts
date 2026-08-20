@@ -32,6 +32,12 @@ describe("rubric REST item endpoints", () => {
     expect(response.body.error).toContain("Valid item id");
   });
 
+  it("protects mobile purchase creation behind a bearer token", async () => {
+    const response = await request(createTestApp()).post("/api/orders").send({ items: [{ productId: 1, quantity: 1 }] });
+    expect(response.status).toBe(401);
+    expect(response.body.error).toContain("Bearer token");
+  });
+
   it("protects admin CRUD creation behind a bearer token", async () => {
     const response = await request(createTestApp()).post("/api/items").send({ name: "Unauthorized item" });
     expect(response.status).toBe(401);

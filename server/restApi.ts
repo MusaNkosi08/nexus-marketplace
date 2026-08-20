@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { nanoid } from "nanoid";
 import { eq } from "drizzle-orm";
 import { getDb } from "./db";
-import { categories, collections, products, users } from "../drizzle/schema";
+import { categories, collections, orderItems, orders, products, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
 const jwtSecret = () => ENV.cookieSecret || process.env.JWT_SECRET || "nexus-local-development-secret";
@@ -89,6 +89,28 @@ export function registerRestApi(app: Express) {
     const id = Number(req.authUser?.sub);
     const user = db ? (await db.select().from(users).where(eq(users.id, id)).limit(1))[0] : undefined;
     return user ? res.json({ user: publicUser(user) }) : res.status(404).json({ error: "User not found" });
+  });
+
+  router.post("/orders", requireJwt, async (req: AuthenticatedRequest, res) => {
+    const requested = Array.isArray(req.body?.items) ? req.body.items : [];
+    if (!requested.length) return res.status(400).json({ error: "At least one item is required" });
+    const db = await getDb();
+    if (!db) return res.status(503).json({ error: "Database unavailable" });
+    const lines: Array<{ product: typeof products.$inferSelect; quantity: number }> = [];
+    for (const line of requested) {
+      const productId = Number(line?.productId);
+      const quantity = Number(line?.quantity);
+      if (!Number.isInteger(productId) || !Number.isInteger(quantity) || quantity < 1) return res.status(400).json({ error: "Invalid order item" });
+      const product = (await db.select().from(products).where(eq(products.id, productId)).limit(1))[0];
+      if (!product || !product.isAvailable || product.stock < quantity) return res.status(409).json({ error: `${product?.name ?? "Product"} is not available in the requested quantity` });
+      lines.push({ product, quantity });
+    }
+    const total = lines.reduce((sum, line) => sum + Number(line.product.priceZar) * line.quantity, 0);
+    const orderResult = await db.insert(orders).values({ userId: Number(req.authUser?.sub), status: "confirmed", totalZar: total.toFixed(2) });
+    const orderId = Number(orderResult[0].insertId);
+    await db.insert(orderItems).values(lines.map(({ product, quantity }) => ({ orderId, productId: product.id, productName: product.name, unitPriceZar: Number(product.priceZar).toFixed(2), quantity })));
+    for (const { product, quantity } of lines) await db.update(products).set({ stock: product.stock - quantity, isAvailable: product.stock - quantity > 0 }).where(eq(products.id, product.id));
+    return res.status(201).json({ orderId, totalZar: total.toFixed(2), status: "confirmed" });
   });
 
   router.get("/items", async (_req, res) => {

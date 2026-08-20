@@ -76,3 +76,21 @@
 - [x] Add a safe authorized-admin mutation test path for the REST item endpoints without leaving test data behind
 
 - [x] Add endpoint-level admin-token mutation coverage using a safe mocked database success path
+
+
+## NEXUS Commerce Parity Extensions
+
+- [x] Add 10 additional real technology products with matching imagery, categories, collections, prices, and stock
+- [x] Document MySQL Workbench connection and migration workflow for the existing MySQL-compatible database
+- [x] Require authentication before checkout/purchase on the React web client
+- [x] Require authentication before purchase on the Angular client
+- [x] Require authentication before purchase on the Expo mobile client
+- [x] Expose admin stock quantity updates consistently on React web, Angular, and mobile
+- [x] Bring catalogue, product detail, bag, authentication, stock, and purchase entry points to web/mobile parity
+- [x] Verify npm install workflows for root, Angular, and mobile projects using clean manifest checks and generated lockfiles
+- [x] Verify Expo Go-compatible start configuration and document device/API URL setup
+- [x] Add tests for authentication-before-purchase and stock-aware purchase behavior
+
+- [x] Add a dedicated mobile product-detail route with add-to-bag behavior
+- [x] Run the Expo Go startup command and capture a successful Expo Go LAN startup validation
+- [x] Add insufficient-stock rejection and stock-decrement assertions for authenticated orders
