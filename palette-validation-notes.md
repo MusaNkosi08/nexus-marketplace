@@ -8,7 +8,7 @@ The root storefront screenshot was re-captured at 1280×720 after the contrast a
 
 ## Angular companion
 
-The Angular build completed successfully after the palette update. `frontend-angular/src/index.html` contains the palette variables and Bootstrap overrides: Java Brown navigation/dark surfaces, Sceptre Red buttons and danger accents, Cerulean Blue focus and accent states, Potting Soil text, and Transparent Yellow page background. The build output was generated at `frontend-angular/dist/nexus-angular-web`.
+The Angular build completed successfully after the palette update. `frontend/src/index.html` contains the palette variables and Bootstrap overrides: Java Brown navigation/dark surfaces, Sceptre Red buttons and danger accents, Cerulean Blue focus and accent states, Potting Soil text, and Transparent Yellow page background. The build output was generated at `frontend/dist/nexus-angular-web`.
 
 ## Expo mobile
 

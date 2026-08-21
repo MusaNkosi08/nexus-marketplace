@@ -6,7 +6,7 @@ The existing React NEXUS storefront remains in the project root and has not been
 
 ## Separate Angular Web Deliverable
 
-`frontend-angular/` is a separate Angular web project styled with Bootstrap. It contains rubric-aligned routes for Home, Item List, Item Detail, Cart, and Admin Panel. The Angular client consumes the Express REST API at `/api/items` and `/api/items/:id`; the admin screen includes validated add fields, stock updates, and delete actions.
+`frontend/` is a separate Angular web project styled with Bootstrap. It contains rubric-aligned routes for Home, Item List, Item Detail, Cart, and Admin Panel. The Angular client consumes the Express REST API at `/api/items` and `/api/items/:id`; the admin screen includes validated add fields, stock updates, and delete actions.
 
 ## Separate React Native Mobile Deliverable
 
@@ -22,11 +22,11 @@ The current checkout remains simulated and continues to create real local orders
 
 ## Submission Structure
 
-For the assignment zip, include `mobile/`, `frontend-angular/`, the existing backend and database folders in the project root, and exclude all `node_modules` directories. The root React storefront can be retained as the existing NEXUS web reference, while `frontend-angular/` is the rubric-specific Angular web deliverable.
+For the assignment zip, include `mobile/`, `frontend/`, the existing backend and database folders in the project root, and exclude all `node_modules` directories. The root React storefront can be retained as the existing NEXUS web reference, while `frontend/` is the rubric-specific Angular web deliverable.
 
 ## Export and Installation
 
-The root project, `frontend-angular/`, and `mobile/` each have their own `package.json`; clean-manifest npm lockfiles were generated for all three. After export, run `npm install` in the project root, then separately run `npm install` inside `frontend-angular/` and `mobile/`. The root web app starts with its existing web script, the Angular companion starts with `npm start`, and the Expo client starts with `npx expo start`.
+The root project, `frontend/`, and `mobile/` each have their own `package.json`; clean-manifest npm lockfiles were generated for all three. After export, run `npm install` in the project root, then separately run `npm install` inside `frontend/` and `mobile/`. The root web app starts with its existing web script, the Angular companion starts with `npm start`, and the Expo client starts with `npx expo start`.
 
 The mobile project is an Expo Router application intended for **Expo Go**. Its NativeWind root stylesheet is imported from `mobile/app/_layout.tsx`, and `npx expo export --platform web` completed successfully after the configuration correction; this provides an additional browser build check without changing the intended Expo Go workflow. It is not the responsive React web app. On a physical phone, set `EXPO_PUBLIC_API_URL` to the computer's LAN URL, for example `http://192.168.1.20:3000/api`, rather than `localhost`; `localhost` points to the phone itself. Then run `npx expo start` from `mobile/` and scan the QR code with Expo Go. The mobile client includes Home, Categories, Cart, Profile, local JWT account registration/login, mandatory sign-in before purchase, persisted session credentials through SecureStore, and admin stock controls for admin accounts.
 

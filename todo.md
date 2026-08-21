@@ -148,3 +148,11 @@
 - [x] Remove only nonessential files while preserving all runnable web, Angular, Expo, backend, database, test, and documentation files.
 - [x] Rewrite README.md briefly with the NEXUS logo, project purpose, folder map, startup commands, and access notes.
 - [x] Run final tests and build checks after cleanup and save the cleaned checkpoint.
+- [x] Inspect the bottom-right Manus watermark; no app-owned mark or fixed bottom-right element exists in NEXUS source, so any visible mark is injected by the managed preview/hosting layer.
+
+## Assignment Brief Folder Reorganization
+
+- [x] Extract the required folder and file layout from the attached MET4 Assignment 2 brief.
+- [x] Map current NEXUS files to the required structure and identify safe moves.
+- [x] Move files into their respective folders and update imports, scripts, and documentation, including backend/src with a server compatibility shim.
+- [x] Run final install, test, build, and startup checks after reorganization, including root, frontend/, and mobile install/startup verification.

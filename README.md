@@ -12,9 +12,9 @@ NEXUS is a premium South African technology marketplace for considered tools acr
 | Area | Location | Purpose |
 |---|---|---|
 | React storefront | `client/` | Editorial web shopping experience |
-| Angular companion | `frontend-angular/` | Bootstrap web implementation |
+| Angular companion | `frontend/` | Bootstrap web implementation |
 | Expo Go app | `mobile/` | Home, Categories, Cart, Profile, and product detail |
-| Backend | `server/` | Express REST API, tRPC, JWT/bcrypt auth, and order logic |
+| Backend deliverable | `backend/` + `server/` | Assignment mapping plus executable Express/tRPC runtime |
 | Database | `drizzle/` | MySQL-compatible schema and migrations |
 | Documentation | `docs/`, `ASSIGNMENT_DELIVERABLES.md` | Assignment support material and diagrams |
 
@@ -30,7 +30,7 @@ npm run dev
 Run Angular separately:
 
 ```bash
-cd frontend-angular
+cd frontend
 npm install
 npm start
 ```

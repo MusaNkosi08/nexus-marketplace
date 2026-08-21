@@ -1,0 +1,7 @@
+# MET4 Assignment 2 layout requirements
+
+The attached brief requires three top-level deliverables: `frontend/` for the Angular web application, `backend/` for the Express.js backend, and `mobile/` for the React Native project. The submission must be a zip named `GroupName_Project.zip`, must exclude `node_modules`, and must contain the mobile project plus a containing folder with both the frontend and backend folders.
+
+The Angular application requires Bootstrap styling, at least five pages—Home, Item List, Item Detail, Cart, and Admin Panel—backend data fetching, and an admin panel with validated add/edit/delete controls. The React Native application requires bottom tabs or equivalent navigation with at least Home, Categories, Cart, and Profile, plus API data fetching and a cart with item list and total. The Express backend requires JWT authentication, bcrypt password hashing, login and registration routes, at least four CRUD item endpoints, and a MongoDB or MySQL-compatible database.
+
+Current NEXUS mapping: `frontend/` is the required Angular `frontend/` deliverable; `server/` plus the root backend configuration is the Express `backend/` deliverable; `mobile/` is already the required separate React Native/Expo deliverable; `client/` is the additional React editorial storefront; `drizzle/` and `MYSQL-WORKBENCH.md` document the MySQL-compatible database; `docs/` contains assignment documentation and mood-board/structure assets.
