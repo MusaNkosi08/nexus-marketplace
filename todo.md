@@ -141,3 +141,10 @@
 - [x] Verify the updated catalogue, stock, orders, footer, and admin visibility behavior across web and mobile.
 - [x] Add exactly 10 products and rebalance the five NEXUS collections to six products each; the eight technical categories are verified at the closest possible 4/3 distribution because 30 cannot divide equally by 8.
 - [x] Remove the public Admin link beside the bag while preserving protected administrator access.
+
+## Repository Cleanup and README
+
+- [x] Audit tracked files and identify generated, temporary, duplicate, and nonessential artifacts.
+- [x] Remove only nonessential files while preserving all runnable web, Angular, Expo, backend, database, test, and documentation files.
+- [x] Rewrite README.md briefly with the NEXUS logo, project purpose, folder map, startup commands, and access notes.
+- [x] Run final tests and build checks after cleanup and save the cleaned checkpoint.

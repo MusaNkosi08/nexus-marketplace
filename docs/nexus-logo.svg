@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">NEXUS logo</title>
+  <desc id="desc">NEXUS technology marketplace wordmark</desc>
+  <rect width="720" height="180" rx="12" fill="#F5EFC6"/>
+  <text x="36" y="116" fill="#231815" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700" letter-spacing="8">NEXUS</text>
+  <circle cx="654" cy="54" r="7" fill="#4D0E12"/>
+</svg>
