@@ -140,3 +140,4 @@
 - [x] Add 10 real products and rebalance the eight technical categories as evenly as possible for 30 total products.
 - [x] Verify the updated catalogue, stock, orders, footer, and admin visibility behavior across web and mobile.
 - [x] Add exactly 10 products and rebalance the five NEXUS collections to six products each; the eight technical categories are verified at the closest possible 4/3 distribution because 30 cannot divide equally by 8.
+- [x] Remove the public Admin link beside the bag while preserving protected administrator access.

@@ -48,7 +48,7 @@ export default function Home() {
     <header className="site-header">
       <a className="wordmark" href="#top">NEXUS<span>®</span></a>
       <nav className={`main-nav ${menuOpen ? "open" : ""}`}>{navItems.map((item) => <button key={item} onClick={() => { setActiveCollection(item); document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }); }}>{item}</button>)}<a href="#catalogue">ALL PRODUCTS</a></nav>
-      <div className="header-actions"><button className="icon-button" onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })} aria-label="Search"><Search size={19} /></button>{user?.role === "admin" && <a className="admin-link" href="/admin">ADMIN</a>}<button className="bag-button" onClick={() => setBagOpen(true)}>BAG <span>{bag.length.toString().padStart(2, "0")}</span></button><button className="icon-button menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu"><Menu size={20} /></button></div>
+      <div className="header-actions"><button className="icon-button" onClick={() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" })} aria-label="Search"><Search size={19} /></button><button className="bag-button" onClick={() => setBagOpen(true)}>BAG <span>{bag.length.toString().padStart(2, "0")}</span></button><button className="icon-button menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu"><Menu size={20} /></button></div>
     </header>
 
     <main id="top">
